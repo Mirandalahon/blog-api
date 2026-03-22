@@ -1,0 +1,126 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Blog API",
+    "version": "1.0.0",
+    "description": "Documentation de l'API Blog avec CRUD et recherche"
+  },
+  "paths": {
+    "/api/articles": {
+      "get": {
+        "summary": "Lister tous les articles",
+        "responses": {
+          "200": {
+            "description": "Liste des articles"
+          }
+        }
+      },
+      "post": {
+        "summary": "Créer un nouvel article",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "titre": { "type": "string" },
+                  "contenu": { "type": "string" },
+                  "auteur": { "type": "string" },
+                  "date": { "type": "string" },
+                  "categorie": { "type": "string" },
+                  "tags": { "type": "string" }
+                },
+                "required": ["titre", "auteur"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Article créé avec succès"
+          }
+        }
+      }
+    },
+    "/api/articles/{id}": {
+      "get": {
+        "summary": "Lire un article par ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Article trouvé" },
+          "404": { "description": "Article non trouvé" }
+        }
+      },
+      "put": {
+        "summary": "Modifier un article existant",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "titre": { "type": "string" },
+                  "contenu": { "type": "string" },
+                  "categorie": { "type": "string" },
+                  "tags": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Article mis à jour" },
+          "404": { "description": "Article non trouvé" }
+        }
+      },
+      "delete": {
+        "summary": "Supprimer un article",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Article supprimé" },
+          "404": { "description": "Article non trouvé" }
+        }
+      }
+    },
+    "/api/articles/search": {
+      "get": {
+        "summary": "Rechercher des articles",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Résultats de la recherche" }
+        }
+      }
+    }
+  }
+}
